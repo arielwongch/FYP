@@ -1,11 +1,19 @@
 # Progress
 
 ## Current focus
-- Scaffold one maintainable Python application with a local browser UI.
-- Implement a tool-free, multi-turn ReAct loop with live thought events.
-- Persist conversations locally and expose them through a sidebar.
+- Review and validate the complete local research console.
 
 ## Done
+- [x] Added per-conversation JSON persistence under `.data/`.
+- [x] Added a bounded tool-free ReAct loop with validated SSE events.
+- [x] Added conversation and streaming chat HTTP endpoints.
+- [x] Added a responsive vanilla browser UI with sidebar, chat, thought trace,
+  settings, Markdown answers, and a Stop-ready busy state.
+- [x] Served the UI directly from the Python application.
+- [x] Persisted settings edits through the conversation API.
+- [x] Verified the backend with 8 focused tests and an HTTP mock smoke test.
+- [x] Added typed environment configuration with explicit provider validation.
+- [x] Added focused configuration tests for mock mode and credential errors.
 - [x] Confirmed local browser UI rather than a hosted deployment.
 - [x] Selected OpenRouter as the initial provider.
 - [x] Selected a configurable Qwen model under 8B parameters.
@@ -19,12 +27,7 @@
 	mock fallback.
 
 ## Next
-- [ ] Replace stale full-stack scaffolding assumptions with the single-process layout.
-- [ ] Add configuration loading and an OpenRouter client.
-- [ ] Define validated stream event schemas.
-- [ ] Implement the tool-free ReAct loop with a turn limit.
-- [ ] Add local conversation storage and streaming chat endpoints.
-- [ ] Build the browser UI with sidebar, chat, and live thought trace.
+- [ ] Add browser automation coverage when a browser test runner is available.
 
 ## Locked decisions
 - Local-only browser application; no public hosting requirement.
@@ -40,3 +43,5 @@
 - An offline mock provider is required for development without an API key.
 - Mock mode must be selected explicitly with `LLM_PROVIDER=mock`.
 - All secrets stay in the local process environment.
+- SSE is the browser streaming transport; the UI uses plain HTML, CSS, and
+	JavaScript with no frontend build step.
