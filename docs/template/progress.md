@@ -1,3 +1,24 @@
+# Progress Log Template
+
+**Last Updated:** YYYY-MM-DD
+**Current Phase:** Planning / Development / Review
+
+---
+
+## Completed
+- [ ] Item *(YYYY-MM-DD)*
+
+## In Progress
+- [ ] Item
+
+## Blockers & Known Issues
+- [ ] Item
+
+## Up Next
+- [ ] Item
+
+## Key Decisions
+- **YYYY-MM-DD:** Decision and reason.
 # Project Name - Progress Log
 
 **Last Updated:** YYYY-MM-DD  

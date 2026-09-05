@@ -1,46 +1,29 @@
-# docs/toolbox/env.md
 # Environment
 
-## Runtimes
+## Runtime
 - Python 3.11+
-- Node 20+
 
-## Backend
-- Install: `pip install -r backend/requirements.txt`
-- Run: `cd backend && uvicorn app.main:app --reload`
-- Test: `cd backend && pytest`
+## Application
+- Install: `pip install -r requirements.txt`
+- Run: `python -m app`
+- Test: `pytest`
 
-## Frontend
-- Install: `cd frontend && npm install`
-- Run: `cd frontend && npm start`
-- Lint: `npm run lint`
+## Common workflow
 
-## Common workflows
-
-### Start both services
-- Terminal 1:
-  ```bash
-  cd backend
-  uvicorn app.main:app --reload
-  ```
-- Terminal 2:
-  ```bash
-  cd frontend
-  npm start
-  ```
-
-## VS Code setup
-- Extensions:
-  - Python, Pylance, Black Formatter, ruff
-  - ESLint, Prettier
-  - GitHub Copilot, Copilot Chat
-- Recommended settings:
-  - Format on save
-  - Run tests on save (optional)
+```bash
+cp .env.example .env
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+python -m app
+```
 
 ## Env vars
-- Backend `.env`:
-  - `LLM_API_KEY=...`
-  - `LLM_BASE_URL=https://api.openai.com/v1` (or your provider)
-- Frontend:
-  - No secrets; all calls go through backend.
+- `OPENROUTER_API_KEY=...`
+- `OPENROUTER_BASE_URL=https://openrouter.ai/api/v1`
+- `QWEN_MODEL=qwen/qwen3-4b`
+- `LLM_PROVIDER=openrouter` or `mock`
+- `HOST=127.0.0.1`
+- `PORT=8000`
+- `MAX_AGENT_TURNS=8`
+- The browser receives no secrets.

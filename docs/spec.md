@@ -1,24 +1,44 @@
-# docs/spec.md
-# ReAct LLM Loop – Local Demo
+# ReAct LLM Loop - Local Research Demo
 
-## Goal
-Build a localhost web app where:
-- User enters a prompt in a React UI.
-- Backend runs a ReAct-style loop calling an LLM API.
-- Frontend shows:
-  - Final answer
-  - ReAct trace (thoughts, actions, observations)
+Build a small local browser app for experimenting with an agent loop. It is a
+research tool for one developer, not a hosted product.
 
-## Constraints
-- Localhost only (no auth, no public deployment).
-- Backend holds LLM API key in environment variable.
-- Support swapping LLM provider via config (OpenAI-compatible interface).
+The first stage should:
+- Serve a browser UI from one simple Python application.
+- Send prompts to OpenRouter using a configurable Qwen model under 8B parameters.
+- Maintain multi-turn conversation context.
+- Stream visible thought events and the final answer live to the browser.
+- Render final answers as Markdown; keep thought events as plain text.
+- Use a dark research-console theme by default.
+- Persist multiple conversations locally, with automatically generated titles.
+- Save the effective model, temperature, maximum turns, and system prompt with
+  each conversation.
+- Run without tools. The loop must have a clear extension point for tools later.
+
+- Localhost only; no authentication, public deployment, or hosted database.
+- The OpenRouter API key stays in the local process environment.
+- The browser must never receive provider credentials.
+- Conversation data is stored in a local file-based format under `.data/`.
+- LLM output is untrusted and must be parsed/validated before becoming an event.
+- Agent execution has a configurable maximum turn count.
+- Provide an offline mock provider for testing the UI and loop without an API key.
+- Provider selection is explicit: missing OpenRouter credentials must not silently
+  switch an experiment to mock mode.
 
 ## Acceptance criteria
-- [ ] React app runs on http://localhost:3000 (or similar).
-- [ ] Backend runs on http://localhost:8000 (or similar).
-- [ ] POST /chat accepts { "prompt": string } and returns:
-  - final_answer: string
-  - trace: array of { role: "thought" | "action" | "observation" | "final", content: string }
-- [ ] Frontend sends prompt to backend and displays trace + final answer.
-- [ ] Changing LLM_API_KEY in backend .env changes the model used without code changes.
+- [ ] One Python command starts the local app and serves the browser UI.
+- [ ] A chat request accepts a conversation id and prompt, then streams events.
+- [ ] Events include `thought`, `final`, and lifecycle/error states.
+- [ ] The UI renders user messages, live thoughts, and the final answer distinctly.
+- [ ] Final answers render Markdown while thought events remain plain text.
+- [ ] The browser UI uses a dark theme by default and remains usable on smaller
+  screens.
+- [ ] Multiple conversations can be created and selected from a sidebar.
+- [ ] Conversations survive an application restart.
+- [ ] Conversation settings survive an application restart and are restored when
+  the conversation is selected.
+- [ ] Changing `OPENROUTER_API_KEY` or `QWEN_MODEL` in `.env` changes configuration
+  without code changes.
+- [ ] A tool registry boundary exists but contains no enabled tools in stage one.
+- [ ] Mock mode can exercise streaming and persistence without calling OpenRouter.
+- [ ] Missing credentials produce a clear error unless `LLM_PROVIDER=mock` is set.

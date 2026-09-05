@@ -1,37 +1,26 @@
-# docs/toolbox/workflow.md
-# My Vibe-Coding Workflow
+# FYP Vibe-Coding Workflow
+# FYP Vibe-Coding Workflow
 
 ## Before coding
-1. Open:
+1. Read:
    - `docs/spec.md`
    - `docs/architecture.md`
    - `docs/memory.md`
    - `docs/toolbox/workflow.md`
-2. In Copilot Chat:
-   - Attach SPEC + ARCHITECTURE.
-   - Ask: "Summarize current state and open questions."
-3. Update `docs/progress.md`:
-   - What's done
-   - What I'm focusing on now
-   - Any locked decisions
+2. Ask Copilot to summarize the current state and open questions.
+3. Update `docs/progress.md` with completed work, current focus, next steps, and
+   locked decisions.
 
 ## Implementation loop (per feature)
 
-1. Clarify:
-   - Write a short note in `progress.md`: Please Reference `docs\template\progress.md`
-2. Implement:
-   - "Implement X `.github\copilot-instructions.md`."
-3. Review:
-   - Does it match `spec.md`?
-   - Any security issues (keys, input validation)?
-4. Test:
-   - Run relevant tests.
-   - If missing, ask: "Add tests for X in `backend/tests/`."
-5. Commit:
-   - Small commits with clear messages.
-6. Update:
-   - `progress.md` (done/next)
-   - `memory.md` (new pitfalls/patterns)(reference `docs\toolbox\workflow.md`)
+1. Clarify the smallest useful feature and its acceptance check.
+2. Implement one focused slice in the relevant `app/` or `ui/` module.
+3. Validate immediately with the narrowest useful test, startup check, or lint
+   command.
+4. Review against `docs/spec.md`, especially secret handling and input validation.
+5. Update `docs/progress.md`, `docs/memory.md`, and `docs/logs.md` when the slice
+   creates a durable decision or learning.
+6. Make small commits with clear messages when committing is requested.
 
 ## Debugging checklist
 
@@ -39,20 +28,22 @@ When something breaks:
 
 - [ ] Read error carefully; paste into Copilot with context files.
 - [ ] Check:
-  - Env vars (`LLM_API_KEY`, URLs)
-  - Imports and paths
+   - Env vars (`OPENROUTER_API_KEY`, `OPENROUTER_BASE_URL`, `LLM_PROVIDER`)
+   - Imports and local module paths
+   - Explicit provider selection (`openrouter` or `mock`)
+   - `.data/` persistence and JSON validity
   - Tool registry includes the new tool
-  - Skill allows the tool
 - [ ] Add a minimal test that reproduces the issue.
 - [ ] Find the root cause and list out the files involved
 - [ ] Fix, then ensure test passes.
 
 ## Security checklist
 
-- [ ] No API keys in frontend or logs.
-- [ ] All LLM output treated as untrusted.
-- [ ] Tool execution bounded (timeouts, path restrictions).
-- [ ] Localhost-only CORS.
+- [ ] No API keys in browser responses or logs.
+- [ ] All LLM output treated as untrusted and validated.
+- [ ] Provider selection never silently falls back.
+- [ ] Tool execution is bounded when tools are introduced.
+- [ ] Bind to localhost by default.
 
 ## When I'm stuck
 
